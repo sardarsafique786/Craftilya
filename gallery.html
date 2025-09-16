@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Craftilya — Shop</title>
+  <!-- Link to the CSS file (I'll provide next) -->
+  <link rel="stylesheet" href="gallery.css" />
+  <!-- Google font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- SITE HEADER (sticky) -->
+  <header class="site-header" role="banner">
+    <div class="header-inner container">
+      <button id="menuToggle" class="icon-btn menu-toggle" aria-label="Open menu">☰</button>
+
+      <a class="brand" href="index.html" aria-label="Craftilya home">
+        <span class="brand-name">Craft<span>Liya</span></span>
+      </a>
+
+      <!-- Search -->
+      <div class="header-search">
+        <input id="globalSearch" type="search" placeholder="Search for products, brands and more..." aria-label="Search products">
+        <button id="searchBtn" class="btn-icon" aria-label="Search">🔍</button>
+        <!-- suggestions / live results container -->
+        <div id="searchSuggestions" class="search-suggestions" aria-hidden="true"></div>
+      </div>
+
+      <!-- Header actions -->
+      <div class="header-actions">
+        <button id="wishlistBtn" class="icon-btn" aria-label="Open wishlist">♡ <span id="wishlistCount" class="badge small">0</span></button>
+        <button id="compareBtn" class="icon-btn" aria-label="Open compare">⇄</button>
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+        <button id="cartBtn" class="icon-btn cart-btn" aria-label="Open cart">🛒 <span id="cartCount" class="badge">0</span></button>
+      </div>
+    </div>
+
+    <!-- secondary nav or breadcrumbs (optional) -->
+    <div class="header-sub container">
+      <nav class="nav-categories" aria-label="Primary categories">
+        <a href="home.html" class="cat">Home</a>
+        <a href="#" class="cat active">Products</a>
+        <a href="#workshops" class="cat">Workshops</a>
+        <a href="#about" class="cat">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="container main-layout" id="mainLayout">
+    <!-- FILTER SIDEBAR -->
+    <aside class="filters" id="filters" aria-label="Product filters">
+      <div class="filters-header">
+        <h3>Filters</h3>
+        <button id="resetFilters" class="btn ghost small">Reset</button>
+      </div>
+
+      <div class="filter-block">
+        <label for="filterSearch">Search in results</label>
+        <input id="filterSearch" type="search" placeholder="Search products..." />
+      </div>
+
+      <div class="filter-block">
+        <label>Category</label>
+        <div class="filter-list">
+          <label><input type="radio" name="category" value="all" checked> All</label>
+          <label><input type="radio" name="category" value="handmade"> Handmade</label>
+          <label><input type="radio" name="category" value="readymade"> Readymade</label>
+          <label><input type="radio" name="category" value="decor"> Decor</label>
+          <label><input type="radio" name="category" value="jewelry"> Jewelry</label>
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <label for="priceRange">Price</label>
+        <select id="priceRange">
+          <option value="all">All</option>
+          <option value="0-499">₹0 - ₹499</option>
+          <option value="500-999">₹500 - ₹999</option>
+          <option value="1000-1999">₹1000 - ₹1999</option>
+          <option value="2000+">₹2000+</option>
+        </select>
+      </div>
+
+      <div class="filter-block">
+        <label for="ratingFilter">Ratings</label>
+        <select id="ratingFilter">
+          <option value="all">All ratings</option>
+          <option value="4">4★ & up</option>
+          <option value="3">3★ & up</option>
+        </select>
+      </div>
+
+      <div class="filter-block">
+        <label for="brandFilter">Sort by</label>
+        <select id="sortBy">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="rating-desc">Rating</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+
+      <!-- sticky CTA for mobile -->
+      <div class="filters-footer">
+        <button id="applyFilters" class="btn">Apply filters</button>
+      </div>
+    </aside>
+
+    <!-- PRODUCTS + CONTROLS -->
+    <section class="products-area">
+      <div class="products-top">
+        <div class="results-info">
+          <h1>Products</h1>
+          <p id="resultsSummary" class="muted">Showing <span id="resultsCount">0</span> items</p>
+        </div>
+
+        <div class="products-controls">
+          <label class="small">View</label>
+          <select id="viewMode">
+            <option value="grid">Grid</option>
+            <option value="list">List</option>
+          </select>
+
+          <label class="small">Sort</label>
+          <select id="topSort">
+            <option value="relevance">Relevance</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="rating-desc">Rating</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- product grid -->
+      <div id="productGrid" class="product-grid" aria-live="polite">
+        <!-- JS will render product-cards here -->
+        <!-- skeleton placeholder area for lazy loading -->
+        <div id="skeletonContainer" class="skeleton-grid" aria-hidden="true"></div>
+      </div>
+
+      <!-- pagination / load more -->
+      <div class="pagination-area">
+        <button id="loadMore" class="btn ghost">Load more</button>
+        <div id="infiniteLoader" class="muted small" hidden>Loading more items…</div>
+      </div>
+
+      <!-- related / recommendations -->
+      <section id="recommendations" class="recommendations" aria-label="Recommended products" hidden>
+        <h3>You might also like</h3>
+        <div class="recommendation-grid"></div>
+      </section>
+    </section>
+  </main>
+
+  <!-- QUICK VIEW / PRODUCT MODAL -->
+  <div id="productModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-inner">
+      <button id="modalClose" class="modal-close" aria-label="Close">✕</button>
+
+      <div class="modal-body">
+        <div class="modal-left">
+          <div class="modal-gallery">
+            <button id="modalPrev" class="arrow left" aria-label="Prev image">&#10094;</button>
+            <div class="media-viewport">
+              <img id="modalMainImage" src="" alt="Product image" loading="lazy">
+            </div>
+            <button id="modalNext" class="arrow right" aria-label="Next image">&#10095;</button>
+
+            <button id="modalFullscreenBtn" class="icon-btn fullscreen-toggle" aria-label="Open fullscreen">🔍</button>
+
+            <div id="modalThumbs" class="thumbs"></div>
+          </div>
+        </div>
+
+        <div class="modal-right">
+          <h2 id="modalTitle"></h2>
+          <div class="meta">
+            <span class="price" id="modalPrice"></span>
+            <span class="badge" id="modalDiscount"></span>
+            <div class="rating" id="modalRating">★ 4.5</div>
+          </div>
+
+          <p id="modalShortDesc" class="muted"></p>
+
+          <div class="product-actions">
+            <label for="modalQty">Qty</label>
+            <input id="modalQty" type="number" min="1" value="1" />
+            <button id="modalAddCart" class="btn">Add to cart</button>
+            <button id="modalWishlist" class="btn ghost">♡ Wishlist</button>
+          </div>
+
+          <div class="product-extra">
+            <p id="stockInfo" class="small">In stock</p>
+            <p id="sellerInfo" class="small muted">Sold by <strong id="sellerName">Craftilya Studio</strong></p>
+            <div id="offers" class="offers small"></div>
+          </div>
+
+          <!-- Reviews preview -->
+          <div class="reviews-preview" id="reviewsPreview">
+            <h4>Customer reviews</h4>
+            <div id="reviewsList" class="reviews-list"></div>
+            <button id="openReviews" class="btn ghost small">Read all reviews</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN VIEWER -->
+  <div id="fullscreenViewer" class="fullscreen" aria-hidden="true">
+    <button id="fsClose" class="fs-close" aria-label="Close fullscreen">✕</button>
+    <button id="fsPrev" class="fs-arrow left" aria-label="Prev">&#10094;</button>
+    <img id="fsImage" src="" alt="Fullscreen image" loading="lazy">
+    <button id="fsNext" class="fs-arrow right" aria-label="Next">&#10095;</button>
+
+    <div id="fsThumbs" class="fs-thumbs" aria-hidden="false"></div>
+    <div id="fsZoomHint" class="small muted">Tap/click image to zoom. Swipe or use arrows to navigate.</div>
+  </div>
+
+  <!-- MINI CART DRAWER -->
+  <aside id="miniCart" class="mini-cart" aria-hidden="true">
+    <button id="miniCartClose" class="mini-close" aria-label="Close cart">✕</button>
+    <h3>Your Cart</h3>
+    <div id="miniCartItems" class="mini-items"></div>
+    <div class="mini-footer">
+      <div class="mini-total">Total: <strong id="miniCartTotal">₹0</strong></div>
+      <div class="mini-actions">
+        <button id="goToCheckout" class="btn">Checkout</button>
+        <button id="clearCart" class="btn ghost">Clear</button>
+      </div>
+    </div>
+  </aside>
+  <div id="pageOverlay" class="overlay" hidden></div>
+
+  <!-- REVIEWS / Q&A MODAL (placeholder) -->
+  <div id="reviewsModal" class="modal small" aria-hidden="true">
+    <div class="modal-inner">
+      <button id="reviewsClose" class="modal-close">✕</button>
+      <h3>Customer reviews</h3>
+      <div id="allReviews" class="reviews-full"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>CraftLiya Studio</h4>
+        <p class="muted">Handmade & readymade craft — small-batch, heart-made pieces.</p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="gallery.html">Products</a></li>
+          <li><a href="#workshops">Workshops</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <p class="muted">support@craftliyastudio.com</p>
+      </div>
+
+      <div>
+        <h4>Subscribe</h4>
+        <form id="subscribeForm">
+          <input id="subscribeEmail" type="email" placeholder="Your email" required>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="footerYear">2026</span> CraftLiya • Crafted with ❤️</div>
+  </footer>
+
+  <!-- script (I'll provide app.js / style.css next) -->
+  <script src="gallery.js" defer></script>
+</body>
+</html>

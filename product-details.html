@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product Details — CraftLiya</title>
+  <link rel="stylesheet" href="gallery.css" />
+</head>
+<body>
+  <header class="site-header small">
+    <div class="container header-inner">
+      <a class="back-link" href="gallery.html">← Back to products</a>
+      <div class="logo">Craft<span>Liya</span></div>
+    </div>
+  </header>
+
+  <main class="container product-details-page">
+    <section class="product-details">
+      <div class="media">
+        <img id="detail-img" src="" alt="Product image">
+      </div>
+      <div class="details-info">
+        <h2 id="detail-title"></h2>
+        <p id="detail-desc"></p>
+        <p class="price">₹<span id="detail-price"></span></p>
+
+        <div class="actions-row">
+          <label>Qty: <input id="detailQty" type="number" value="1" min="1" /></label>
+          <button id="detailAddCart" class="btn">Add to Cart</button>
+        </div>
+
+        <hr>
+
+        <div class="meta">
+          <p><strong>Category:</strong> <span id="detail-type"></span></p>
+          <p><strong>Product ID:</strong> <span id="detail-id"></span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews">
+      <h3>Customer Reviews</h3>
+      <div id="review-list" class="review-list"></div>
+
+      <form id="review-form" class="review-form">
+        <textarea id="reviewText" placeholder="Write your review..." required></textarea>
+        <label class="file-label">Attach photo (optional)
+          <input id="reviewImage" type="file" accept="image/*" />
+        </label>
+        <div style="display:flex;gap:.5rem;align-items:center;">
+          <select id="ratingSelect" required>
+            <option value="">Rating</option>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="1">★☆☆☆☆</option>
+          </select>
+          <button class="btn" type="submit">Submit Review</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="gallery.js"></script>
+  <script>
+    // product-details specific script — uses window.PRODUCTS and window.CART_KEY from gallery.js
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const product = window.PRODUCTS?.find(p=>p.id===id);
+      if(!product){
+        document.querySelector('.product-details-page').innerHTML = '<p>Product not found. <a href="gallery.html">Back to products</a></p>';
+        return;
+      }
+
+      // elements
+      const imgEl = document.getElementById('detail-img');
+      const titleEl = document.getElementById('detail-title');
+      const descEl = document.getElementById('detail-desc');
+      const priceEl = document.getElementById('detail-price');
+      const typeEl = document.getElementById('detail-type');
+      const idEl = document.getElementById('detail-id');
+      const qtyEl = document.getElementById('detailQty');
+      const addBtn = document.getElementById('detailAddCart');
+
+      imgEl.src = product.image;
+      imgEl.alt = product.title;
+      titleEl.textContent = product.title;
+      descEl.textContent = product.desc;
+      priceEl.textContent = product.price;
+      typeEl.textContent = product.type;
+      idEl.textContent = product.id;
+
+      // add to cart
+      addBtn.addEventListener('click', ()=>{
+        const qty = Number(qtyEl.value) || 1;
+        const cart = JSON.parse(localStorage.getItem(window.CART_KEY) || '[]');
+        const existing = cart.find(i=>i.id===product.id);
+        if(existing) existing.qty += qty;
+        else cart.push({ id: product.id, title: product.title, price: product.price, qty });
+        localStorage.setItem(window.CART_KEY, JSON.stringify(cart));
+        // update cart UI (global function available)
+        if(typeof window.updateCart === 'function') window.updateCart();
+        // small feedback
+        alert('Added to cart ✔️');
+      });
+
+      // Reviews: store in localStorage key 'ac_reviews_v1' as { productId: [ {text,image,rating,date} ] }
+      const REV_KEY = 'ac_reviews_v1';
+      const reviewListEl = document.getElementById('review-list');
+      const form = document.getElementById('review-form');
+      const text = document.getElementById('reviewText');
+      const fileInput = document.getElementById('reviewImage');
+      const ratingSelect = document.getElementById('ratingSelect');
+
+      function loadReviews(){
+        const all = JSON.parse(localStorage.getItem(REV_KEY) || '{}');
+        const list = all[product.id] || [];
+        reviewListEl.innerHTML = '';
+        if(list.length===0) reviewListEl.innerHTML = '<p>No reviews yet — be first!</p>';
+        list.slice().reverse().forEach(r=>{
+          const div = document.createElement('div');
+          div.className = 'review';
+          div.innerHTML = `<div class="rev-head"><strong>${r.rating ? '★'.repeat(r.rating) : ''}</strong><small>${new Date(r.date).toLocaleString()}</small></div>
+                           <p>${escapeHtml(r.text)}</p>`;
+          if(r.image){
+            const im = document.createElement('img'); im.src = r.image; im.alt = 'review image'; im.className='rev-img';
+            div.appendChild(im);
+          }
+          reviewListEl.appendChild(div);
+        });
+      }
+
+      function escapeHtml(str){ return String(str).replace(/[&<>"']/g, s=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[s]); }
+
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const txt = text.value.trim();
+        const rating = Number(ratingSelect.value) || 0;
+        if(!txt){ alert('Please write a review.'); return; }
+
+        const reader = new FileReader();
+        const submitReview = (imgData) => {
+          const all = JSON.parse(localStorage.getItem(REV_KEY) || '{}');
+          all[product.id] = all[product.id] || [];
+          all[product.id].push({ text: txt, image: imgData || null, rating, date: Date.now() });
+          localStorage.setItem(REV_KEY, JSON.stringify(all));
+          text.value=''; fileInput.value=''; ratingSelect.value='';
+          loadReviews();
+        };
+
+        if(fileInput.files && fileInput.files[0]){
+          const f = fileInput.files[0];
+          // limit file size (2MB)
+          if(f.size > 2_000_000){ alert('Image too large (max 2MB).'); return; }
+          reader.onload = ()=> submitReview(reader.result);
+          reader.readAsDataURL(f);
+        } else {
+          submitReview(null);
+        }
+      });
+
+      loadReviews();
+    })();
+  </script>
+</body>
+</html>

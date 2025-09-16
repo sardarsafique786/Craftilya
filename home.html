@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Art & Craft Studio</title>
+  <meta name="description" content="Handmade art & crafts studio in Bhubaneswar — custom decor, workshops, and unique gifts.">
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top marquee -->
+  <div class="marquee" aria-hidden="false">
+    <div class="marquee-inner">
+      <span>✨ New Handmade Collection • Free Shipping Above ₹999 • Custom Orders Available • Workshops Open ✨</span>
+      <span>✨ New Handmade Collection • Free Shipping Above ₹999 • Custom Orders Available • Workshops Open ✨</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="logo">Craft<span>Liya</span></div>
+
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+      <nav class="main-nav" role="navigation" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#testimonials">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+
+      <!-- Cart Badge -->
+      <div class="cart-icon" aria-label="Shopping cart">
+        🛒 <span id="cart-count">0</span>
+      </div>
+
+      <!-- Dark Mode Toggle -->
+      <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="home" aria-label="Hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-inner">
+        <h1 class="reveal-up">Handmade Creations with Love ❤️</h1>
+        <p class="lead reveal-up delay-1">Unique art & crafts that brighten your world — crafted with care.</p>
+        <div class="hero-ctas reveal-up delay-2">
+          <a class="btn btn-primary" href="gallery.html">Explore Gallery</a>
+          <a class="btn btn-outline" href="#customize">🎨 Customize</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section alt-bg">
+      <div class="container">
+        <h2 class="section-title reveal-up">About Us</h2>
+        <p class="reveal-up delay-1">Founded on May 19, 2026, Craftilya is a creative platform dedicated to celebrating the beauty of art and craftsmanship. We bring together traditional artistry and modern design to create unique, meaningful, and high-quality handcrafted pieces.
+
+          Our mission is to inspire creativity, preserve the charm of handmade work, and provide a space where authentic craftsmanship thrives. Every creation at Craftilya reflects passion, originality, and attention to detail—making us more than just a brand, but a destination for timeless artistry.</p>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2 class="section-title reveal-up">Services</h2>
+        <div class="card-grid">
+          <div class="card reveal-up delay-1">
+            <h3>Custom Orders</h3>
+            <p>Personalized pieces made to order — ideal for gifts or special events.</p>
+          </div>
+          <div class="card reveal-up delay-2">
+            <h3>Workshops</h3>
+            <p>Small group sessions for kids and adults: pottery, painting, paper craft and more.</p>
+          </div>
+          <div class="card reveal-up delay-3">
+            <h3>Corporate & Bulk</h3>
+            <p>Branded gifts and bulk handcrafted items for corporate events and weddings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="section alt-bg">
+      <div class="container">
+        <h2 class="section-title reveal-up">Gallery</h2>
+        <p class="small-note reveal-up delay-1">Tap any image to view it larger.</p>
+        <div class="gallery-grid">
+          <div class="img-card card reveal-up delay-2">
+            <img src="https://source.unsplash.com/600x400/?handmade,art" alt="Artwork 1" loading="lazy" data-full="https://source.unsplash.com/1200x800/?handmade,art">
+          </div>
+          <div class="img-card card reveal-up delay-3">
+            <img src="https://source.unsplash.com/600x400/?painting,art" alt="Artwork 2" loading="lazy" data-full="https://source.unsplash.com/1200x800/?painting,art">
+          </div>
+          <div class="img-card card reveal-up delay-4">
+            <img src="https://source.unsplash.com/600x400/?craft,decor" alt="Artwork 3" loading="lazy" data-full="https://source.unsplash.com/1200x800/?craft,decor">
+          </div>
+          <div class="img-card card reveal-up delay-5">
+            <img src="https://source.unsplash.com/600x400/?handicraft,design" alt="Artwork 4" loading="lazy" data-full="https://source.unsplash.com/1200x800/?handicraft,design">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="customize" class="section alt-bg">
+        <div class="container reveal-up">
+          <h2 class="section-title">🎨 Customize Your Creation</h2>
+          <p>Want something unique? ✨ Share your idea with us and we’ll craft it specially for you!</p>
+      
+          <div class="customize-card">
+            <form class="contact-form">
+              <input type="text" id="customName" placeholder="👤 Your Name" required>
+              <input type="email" id="customEmail" placeholder="📧 Your Email" required>
+              <textarea id="customRequest" rows="4" placeholder="📝 Describe your custom idea" required></textarea>
+              <button class="btn btn-primary" type="submit">🚀 Send Request</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+    <!-- Products -->
+    <section id="products" class="section">
+      <div class="container">
+        <h2 class="section-title reveal-up">Our Products</h2>
+
+        <!-- Filter Buttons -->
+        <div class="filter-buttons reveal-up delay-1">
+          <button class="filter-btn active" data-type="all">All</button>
+          <button class="filter-btn" data-type="handmade">Handmade</button>
+          <button class="filter-btn" data-type="readymade">Readymade</button>
+        </div>
+
+        <div class="card-grid product-grid reveal-up delay-2">
+          <div class="card product-card" data-id="p1" data-title="Decorative Vase" data-price="499" data-type="handmade">
+            <img src="https://source.unsplash.com/400x300/?decor,ceramic" alt="Decorative Vase" loading="lazy">
+            <h4>Decorative Vase</h4>
+            <p class="price">₹499</p>
+            <button class="btn small add-cart">Add to Cart</button>
+          </div>
+          <div class="card product-card" data-id="p2" data-title="Handmade Bag" data-price="899" data-type="handmade">
+            <img src="https://source.unsplash.com/400x300/?handmade,bag" alt="Handmade Bag" loading="lazy">
+            <h4>Handmade Bag</h4>
+            <p class="price">₹899</p>
+            <button class="btn small add-cart">Add to Cart</button>
+          </div>
+          <div class="card product-card" data-id="p3" data-title="Wall Hanging" data-price="1299" data-type="readymade">
+            <img src="https://source.unsplash.com/400x300/?wallhanging,craft" alt="Wall Hanging" loading="lazy">
+            <h4>Wall Hanging</h4>
+            <p class="price">₹1,299</p>
+            <button class="btn small add-cart">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+      
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="container">
+        <h2 class="section-title reveal-up">Frequently Asked Questions</h2>
+        <div class="accordion" role="tablist" aria-label="FAQ">
+          <div class="accordion-item reveal-up delay-1">
+            <button class="accordion-toggle" aria-expanded="false" aria-controls="faq1">What is the delivery time for custom orders?</button>
+            <div id="faq1" class="accordion-panel" hidden>
+              <p>Delivery time typically ranges from 7–21 days depending on complexity. We’ll confirm timelines when you place the order.</p>
+            </div>
+          </div>
+          <div class="accordion-item reveal-up delay-2">
+            <button class="accordion-toggle" aria-expanded="false" aria-controls="faq2">Do you ship internationally?</button>
+            <div id="faq2" class="accordion-panel" hidden>
+              <p>Yes — we ship internationally. Shipping costs vary by destination and will be calculated at checkout.</p>
+            </div>
+          </div>
+          <div class="accordion-item reveal-up delay-3">
+            <button class="accordion-toggle" aria-expanded="false" aria-controls="faq3">Can I book a private workshop?</button>
+            <div id="faq3" class="accordion-panel" hidden>
+              <p>Absolutely. Contact us with your preferred dates and group size, and we will arrange a private session.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>CraftLiya Studio</h3>
+          <p>Handmade decor, gifts and workshops. Crafted with love.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="gallery.html">Products</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p>📧 support@CraftLiyastudio.com</p>
+          <p>📞 +91 73774 55154</p>
+          <p>📍 Bhubaneswar, Odisha</p>
+        </div>
+      </div>
+      <p class="footer-bottom">© 2025 CraftLiya Studio. All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close image">✕</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Chat FAB -->
+  <button class="chat-fab" aria-label="Open Chat">💬</button>
+  <div class="chat-popup" hidden>
+    <div class="chat-header">Support</div>
+    <div class="chat-messages"></div>
+    <input type="text" placeholder="Type a message..." />
+    <button class="send-btn">Send</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
